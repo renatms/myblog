@@ -10,7 +10,6 @@ namespace app\models;
 
 
 use yii\base\Model;
-//use yii\web\UploadedFile;
 
 class UpLoadForm extends Model
 {
@@ -23,13 +22,14 @@ class UpLoadForm extends Model
         ];
     }
 
-    public function upload()
+    public function upload($file)
     {
         if ($this->validate()) {
-            $this->image->saveAs("uploaded/{$this->image->baseName}.{$this->image->extension}");
-            return $this->image->name;
+            $this->image->saveAs("uploaded/{$file}");
+            return $file;
         } else {
             return false;
         }
     }
 }
+

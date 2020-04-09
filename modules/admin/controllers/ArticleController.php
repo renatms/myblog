@@ -107,7 +107,7 @@ class ArticleController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->deleteImage($file = "uploaded/{$model->image}");
+        $model->deleteImage($model->image);
         $model->delete();
         return $this->redirect(['index']);
     }
@@ -120,8 +120,11 @@ class ArticleController extends Controller
         {
             $model->image = UploadedFile::getInstance($model, 'image');
             $article = $this->findModel($id);
-            $article->image = $model->upload();
-            if($article->saveImage($article)) $this->redirect('index');
+            $generateFile = strtolower(md5(uniqid($model->image->baseName)) . '.' . $model->image->extension);
+            if(!empty($article->image)) $article->deleteImage($article->image);
+            $article->image = $model->upload($generateFile);
+            $article->saveImage($article);
+            $this->redirect('index');
         }
 
         return $this->render('image', [
