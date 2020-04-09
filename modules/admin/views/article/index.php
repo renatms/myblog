@@ -38,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 {
                     return Html::img($data->getImage(), ['width' => 100]);
                 }
-
             ],
             //'viewed',
             //'user_id',

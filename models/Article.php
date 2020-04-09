@@ -79,6 +79,12 @@ class Article extends \yii\db\ActiveRecord
         unlink("uploaded/{$file}");
     }
 
+    public function saveCategory($category_id)
+    {
+        $this->category_id = $category_id;
+        $this->save();
+    }
+
     /**
      * Gets query for [[Comments]].
      *
@@ -88,4 +94,10 @@ class Article extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Comment::className(), ['article_id' => 'id']);
     }
+
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
 }
