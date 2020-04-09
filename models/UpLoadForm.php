@@ -10,7 +10,7 @@ namespace app\models;
 
 
 use yii\base\Model;
-use yii\web\UploadedFile;
+//use yii\web\UploadedFile;
 
 class UpLoadForm extends Model
 {
@@ -32,5 +32,4 @@ class UpLoadForm extends Model
             return false;
         }
     }
-
 }

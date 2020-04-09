@@ -69,6 +69,16 @@ class Article extends \yii\db\ActiveRecord
         return $this->image ? '/uploaded/' . $this->image : 'no-image';
     }
 
+    public function saveImage(Article $model)
+    {
+        return $model->save();
+    }
+
+    public function deleteImage($file)
+    {
+        unlink($file);
+    }
+
     /**
      * Gets query for [[Comments]].
      *
