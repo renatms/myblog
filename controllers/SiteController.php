@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Article;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -61,7 +62,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $articles = Article::find()->all();
+        return $this->render('index', [
+            'articles' => $articles
+        ]);
     }
 
     /**
@@ -124,5 +128,13 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionSingle($id)
+    {
+        $article = Article::find()->where(['id' => $id])->one();
+        return $this->render('single', [
+            'article' => $article
+        ]);
     }
 }

@@ -85,6 +85,11 @@ class Article extends \yii\db\ActiveRecord
         $this->save();
     }
 
+    public function getDate()
+    {
+        return Yii::$app->formatter->asDate($this->date);
+    }
+
     /**
      * Gets query for [[Comments]].
      *
