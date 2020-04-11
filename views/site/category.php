@@ -23,7 +23,7 @@ use yii\widgets\LinkPager;
             </p>
             <div class="cleaner"></div>
             <ul class="text-center pull-right">
-                <?= (int)$article->viewed; ?>
+                Viewed: <?= (int)$article->viewed; ?>
             </ul>
         </div>
     <?php endforeach; ?>

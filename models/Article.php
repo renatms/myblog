@@ -90,6 +90,14 @@ class Article extends \yii\db\ActiveRecord
         return Yii::$app->formatter->asDate($this->date);
     }
 
+    public function getViewed($id)
+    {
+        $viewed = Article::find()->where(['id' => $id])->one();
+        $viewed->viewed++;
+        $viewed->save(false);
+        return $viewed->viewed;
+    }
+
     /**
      * Gets query for [[Comments]].
      *

@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Article;
+use app\models\Category;
+use app\models\Comment;
 use app\models\UpLoadForm;
 use Yii;
 use yii\data\Pagination;
@@ -71,16 +73,17 @@ class SiteController extends Controller
         $count = $query->count();
 
 
-        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 1]);
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 2]);
 
         $articles = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
 
-        //$articles = Article::find()->all();
+        $categories = Category::find()->all();
         return $this->render('index', [
             'articles' => $articles,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'categories' => $categories
         ]);
     }
 
@@ -148,9 +151,21 @@ class SiteController extends Controller
 
     public function actionSingle($id)
     {
+        $comment = new Comment();
+
+        if (Yii::$app->request->isPost) {
+            $comment->text = Yii::$app->request->post();
+            $comment->article_id = $id;
+            $comment->user_id = $comment->getUser();
+            $comment->status = 0;
+            $comment->date = date('Y-m-d');
+            UpLoadForm::d($comment,1);
+        }
+
         $article = Article::find()->where(['id' => $id])->one();
         return $this->render('single', [
-            'article' => $article
+            'article' => $article,
+            'comment' => $comment
         ]);
     }
 

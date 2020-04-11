@@ -1,10 +1,23 @@
 <?php
 /* @var $articles app\models\Article */
 /* @var $pagination app\models\Article */
+/* @var $categories app\models\Article */
+
+
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
 ?>
+<div class="sidebar_box pull-right">
+    <h3>Categories</h3>
+
+    <ul class="sidebar_menu">
+        <?php foreach ($categories as $category): ?>
+            <li><a href="<?= Url::toRoute(['site/category', 'id' => $category->id]); ?>">&raquo; <?=$category->title;?> <span><?=$category->getArticles()->count();?></span></a></li>
+        <?php endforeach;?>
+    </ul>
+
+</div>
 
 <div id="templatemo_content">
 
@@ -26,7 +39,7 @@ use yii\widgets\LinkPager;
             </p>
             <div class="cleaner"></div>
             <ul class="text-center pull-right">
-                <?= (int)$article->viewed; ?>
+                Viewed: <?= (int)$article->viewed ?>
             </ul>
         </div>
     <?php endforeach; ?>
@@ -35,6 +48,5 @@ use yii\widgets\LinkPager;
         'pagination' => $pagination,
     ]);
     ?>
-
 
 </div>
