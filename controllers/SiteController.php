@@ -3,7 +3,9 @@
 namespace app\controllers;
 
 use app\models\Article;
+use app\models\UpLoadForm;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -62,9 +64,23 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $articles = Article::find()->all();
+
+        $query = Article::find();
+
+
+        $count = $query->count();
+
+
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 1]);
+
+        $articles = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        //$articles = Article::find()->all();
         return $this->render('index', [
-            'articles' => $articles
+            'articles' => $articles,
+            'pagination' => $pagination
         ]);
     }
 
@@ -135,6 +151,22 @@ class SiteController extends Controller
         $article = Article::find()->where(['id' => $id])->one();
         return $this->render('single', [
             'article' => $article
+        ]);
+    }
+
+    public function actionCategory($id)
+    {
+
+        $query = Article::find()->where(['category_id' => $id]);
+        $countQuery = clone $query;
+        $pagination = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 6]);
+        $articles = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('category', [
+            'articles' => $articles,
+            'pagination' => $pagination
         ]);
     }
 }
