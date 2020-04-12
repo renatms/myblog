@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Article;
 use app\models\Category;
 use app\models\Comment;
+use app\models\CommentForm;
 use app\models\UpLoadForm;
 use Yii;
 use yii\data\Pagination;
@@ -151,21 +152,23 @@ class SiteController extends Controller
 
     public function actionSingle($id)
     {
-        $comment = new Comment();
+        $article = Article::find()->where(['id' => $id])->one();
+        $comments = $article->getComments()->where(['status' => 1])->all();
+
+        $newcomment = new CommentForm();
 
         if (Yii::$app->request->isPost) {
-            $comment->text = Yii::$app->request->post();
-            $comment->article_id = $id;
-            $comment->user_id = $comment->getUser();
-            $comment->status = 0;
-            $comment->date = date('Y-m-d');
-            UpLoadForm::d($comment,1);
+            $newcomment->load(Yii::$app->request->post());
+            if ($newcomment->saveComment($id)) {
+                Yii::$app->getSession()->setFlash('comment', 'Your comment will be added soon!');
+                return $this->redirect(['site/single', 'id' => $id]);
+            }
         }
 
-        $article = Article::find()->where(['id' => $id])->one();
         return $this->render('single', [
             'article' => $article,
-            'comment' => $comment
+            'comments' => $comments,
+            'newcomment' => $newcomment
         ]);
     }
 
