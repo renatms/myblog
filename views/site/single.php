@@ -40,12 +40,12 @@ use yii\helpers\Url;
 
             <div class="comment-text">
 
-                <table class="table-info">
+                <table class="table-info" >
                     <tr>
-                        <td>
+                        <td style="border-bottom-style: solid">
                             <h5><?= $comment->user->name ?></h5>
                         </td>
-                        <td>
+                        <td style="border-bottom-style: solid">
 
                             <h5><?= $comment->getDate(); ?></h5>
 
