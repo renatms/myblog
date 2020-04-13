@@ -34,6 +34,9 @@ AppAsset::register($this);
             <li><a data-toggle="dropdown" class="dropdown-toggle" href="/">Home</a>
 
             </li>
+            <li><a data-toggle="dropdown" class="dropdown-toggle" href="/web/site/about">About</a>
+
+            </li>
         </ul>
         <div class="i_con">
             <ul class="nav navbar-nav text-uppercase">
@@ -64,7 +67,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; My Blog <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

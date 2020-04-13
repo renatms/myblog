@@ -1,7 +1,7 @@
 <?php
 /* @var $article app\models\Article */
 /* @var $comment app\models\Comment */
-/* @var $newcomment app\models\CommentForm */
+/* @var $newComment app\models\CommentForm */
 use yii\helpers\Url;
 
 ?>
@@ -30,17 +30,17 @@ use yii\helpers\Url;
 
 </div>
 
+<h4>comments:</h4>
 
 <?php if (!empty($comments)): ?>
 
     <?php foreach ($comments as $comment): ?>
 
         <div class="bottom-comment"><!--bottom comment-->
-            <h4>comments:</h4>
 
             <div class="comment-text">
 
-                <table class="table-info" >
+                <table class="table-info">
                     <tr>
                         <td style="border-bottom-style: solid">
                             <h5><?= $comment->user->name ?></h5>
@@ -74,7 +74,7 @@ use yii\helpers\Url;
 
         <div class="form-group">
             <div class="col-md-12">
-                <?= $form->field($newcomment, 'comment')->textarea([
+                <?= $form->field($newComment, 'comment')->textarea([
                     'class' => 'form-control',
                     'placeholder' => 'Write message'
                 ])->label(false) ?>

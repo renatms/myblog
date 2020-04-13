@@ -13,8 +13,11 @@ use yii\widgets\LinkPager;
 
     <ul class="sidebar_menu">
         <?php foreach ($categories as $category): ?>
-            <li><a href="<?= Url::toRoute(['site/category', 'id' => $category->id]); ?>">&raquo; <?=$category->title;?> <span><?=$category->getArticles()->count();?></span></a></li>
-        <?php endforeach;?>
+            <li><a href="<?= Url::toRoute([
+                    'site/category',
+                    'id' => $category->id
+                ]); ?>">&raquo; <?= $category->title; ?> <span><?= $category->getArticles()->count(); ?></span></a></li>
+        <?php endforeach; ?>
     </ul>
 
 </div>

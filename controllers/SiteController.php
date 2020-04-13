@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\models\Article;
 use app\models\Category;
-use app\models\Comment;
 use app\models\CommentForm;
 use app\models\UpLoadForm;
 use Yii;
@@ -150,16 +149,20 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    /**
+     * @param $id
+     * @return string|Response
+     */
     public function actionSingle($id)
     {
         $article = Article::find()->where(['id' => $id])->one();
         $comments = $article->getComments()->where(['status' => 1])->all();
 
-        $newcomment = new CommentForm();
+        $newComment = new CommentForm();
 
         if (Yii::$app->request->isPost) {
-            $newcomment->load(Yii::$app->request->post());
-            if ($newcomment->saveComment($id)) {
+            $newComment->load(Yii::$app->request->post());
+            if ($newComment->saveComment($id)) {
                 Yii::$app->getSession()->setFlash('comment', 'Your comment will be added soon!');
                 return $this->redirect(['site/single', 'id' => $id]);
             }
@@ -168,10 +171,14 @@ class SiteController extends Controller
         return $this->render('single', [
             'article' => $article,
             'comments' => $comments,
-            'newcomment' => $newcomment
+            'newComment' => $newComment
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionCategory($id)
     {
 
